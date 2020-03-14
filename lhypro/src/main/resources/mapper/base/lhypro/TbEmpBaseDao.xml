@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- =======通过工具自动生成，请勿手工修改！======= -->
+<!-- =======本配置文件中定义的节点可在自定义配置文件中直接使用！       ======= -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<mapper namespace="com.lhy.lhypro.dao.TbEmpDao">
+	<!-- 默认开启二级缓存,使用Least Recently Used（LRU，最近最少使用的）算法来收回 -->
+	<!-- <cache/> -->
+	<!-- 通用查询结果对象-->
+	<resultMap id="BaseResultMap" type="com.lhy.lhypro.po.TbEmp">
+            <id column="id" property="id"/>
+            <result column="Name" property="name"/>
+            <result column="sex" property="sex"/>
+            <result column="age" property="age"/>
+            <result column="address" property="address"/>
+            <result column="email" property="email"/>
+            <result column="PASS_WORD" property="passWord"/>
+	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+			 id,Name,sex,age,address,email,PASS_WORD AS passWord
+	</sql>
+	<!-- 按对象查询记录的WHERE部分-->
+	<sql id="Base_Select_By_Entity_Where">
+			<if test="passWord != null and passWord != ''">
+				and PASS_WORD = #{passWord}
+			</if>
+			<if test="address != null and address != ''">
+				and address = #{address}
+			</if>
+			<if test="sex != null and sex != ''">
+				and sex = #{sex}
+			</if>
+			<if test="id != null and id != ''">
+				and id = #{id}
+			</if>
+			<if test="email != null and email != ''">
+				and email = #{email}
+			</if>
+			<if test="age != null and age != ''">
+				and age = #{age}
+			</if>
+			<if test="name != null and name != ''">
+				and Name = #{name}
+			</if>
+	</sql>
+	<!-- 按对象查询记录的SQL部分 -->
+	<sql id="Base_Select_By_Entity">
+		select
+		<include refid="Base_Column_List"/>
+		from tb_emp
+		<where>
+			<include refid="Base_Select_By_Entity_Where"/>
+		</where>
+	</sql>
+
+	<!-- 按主键查询一条记录 -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List"/>
+		from tb_emp
+		where id = #{param1}
+	</select>
+	<!-- 按主键List查询多条记录 -->
+	<select id="selectBatchByPrimaryKeys" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List"/>
+		from  tb_emp
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+		</foreach>
+	</select>
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.lhy.lhypro.po.TbEmp">
+		<include refid="Base_Select_By_Entity"/>
+	</select>
+
+	<!-- 按对象查询一页记录（多条记录） -->
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="com.lhy.lhypro.po.TbEmp">
+		<include refid="Base_Select_By_Entity"/>
+	</select>
+	<!-- 按主键删除一条记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="map">
+		delete from tb_emp where id = #{param1}
+	</delete>
+	<!-- 按主键List删除多条记录 -->
+	<delete id="deleteBatchByPrimaryKeys" parameterType="map">
+		delete from tb_emp
+		where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+		</foreach>
+	</delete>
+	<!-- 完整插入一条记录-->
+	<insert id="insert" parameterType="com.lhy.lhypro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_emp
+		(PASS_WORD,address,sex,email,age,Name)
+		values(passWord,address,sex,email,age,name)
+	</insert>
+	<!-- 插入一条记录(为空的字段不操作) -->
+	<insert id="insertSelective" parameterType="com.lhy.lhypro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_emp
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="passWord != null">
+                    PASS_WORD,
+				</if>
+				<if test="address != null">
+                    address,
+				</if>
+				<if test="sex != null">
+                    sex,
+				</if>
+				<if test="email != null">
+                    email,
+				</if>
+				<if test="age != null">
+                    age,
+				</if>
+				<if test="name != null">
+                    Name,
+				</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="passWord != null">
+                #{passWord},
+			</if>
+			<if test="address != null">
+                #{address},
+			</if>
+			<if test="sex != null">
+                #{sex},
+			</if>
+			<if test="email != null">
+                #{email},
+			</if>
+			<if test="age != null">
+                #{age},
+			</if>
+			<if test="name != null">
+                #{name},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新一条记录(为空的字段不操作) -->
+	<update id="updateSelectiveByPrimaryKey" parameterType="com.lhy.lhypro.po.TbEmp">
+		update tb_emp
+		<set>
+				<if test="passWord != null">
+                    PASS_WORD=passWord,
+				</if>
+				<if test="address != null">
+                    address=address,
+				</if>
+				<if test="sex != null">
+                    sex=sex,
+				</if>
+				<if test="email != null">
+                    email=email,
+				</if>
+				<if test="age != null">
+                    age=age,
+				</if>
+				<if test="name != null">
+                    Name=name,
+				</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 完整更新一条记录 -->
+	<update id="updateByPrimaryKey" parameterType="com.lhy.lhypro.po.TbEmp">
+		update tb_emp
+		set PASS_WORD= #{passWord},address= #{address},sex= #{sex},email= #{email},age= #{age},Name= #{name}
+		where id = #{id}
+	</update>
+
+	<select id="count" resultType="java.lang.Integer" parameterType="map">
+		SELECT count(1) FROM tb_emp
+		<where>
+			<include refid="Base_Select_By_Entity_Where"/>
+		</where>
+	</select>
+</mapper>
