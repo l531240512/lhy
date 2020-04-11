@@ -53,3 +53,6 @@ mybatis:
         max-idle: 8
         min-idle: 0
         max-active: 8
+
+redisson:
+  address: redis://127.0.0.1:6379
