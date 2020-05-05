@@ -1,0 +1,107 @@
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.async.WebAsyncManager;
+import org.springframework.web.context.request.async.WebAsyncUtils;
+import org.springframework.web.servlet.HandlerAdapter;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.NestedServletException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 项目名字：lhy
+ *
+ * @author 作者: lihuiyang 功能描述：
+ *          SpringMVC中DispatcherServlet学习doDispatch
+ *   1. 创建时间: 2020/5/5 所属公司：lhy
+ */
+
+public class SpringMVC{
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpServletRequest processedRequest = request;
+        HandlerExecutionChain mappedHandler = null;
+        boolean multipartRequestParsed = false;
+        WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
+
+        try {
+        try {
+        ModelAndView mv = null;
+        Object dispatchException = null;
+
+        try {
+        processedRequest = this.checkMultipart(request);
+        multipartRequestParsed = processedRequest != request;
+
+        /**
+         * 获取handler，就是请求对应的Controller中的@RequestMapping对应的反法
+         */
+        mappedHandler = this.getHandler(processedRequest);
+        if (mappedHandler == null) {
+        this.noHandlerFound(processedRequest, response);
+        return;
+        }
+
+        /**
+         * 获取Handler对应的Adapter。
+         *
+         *  Controller注册到spring中有多种方法，
+         *      1、类名上增加@Controller注解方式。这种方式对应一个种Adapter（org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter）
+         *      2、类名上增加@Component注解并且类继承org.springframework.web.servlet.mvc.Controller类。对应一种Adapter（org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter）
+         *
+         */
+        HandlerAdapter ha = this.getHandlerAdapter(mappedHandler.getHandler());
+        String method = request.getMethod();
+        boolean isGet = "GET".equals(method);
+        if (isGet || "HEAD".equals(method)) {
+        long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+        if ((new ServletWebRequest(request, response)).checkNotModified(lastModified) && isGet) {
+        return;
+        }
+        }
+
+        if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+        return;
+        }
+
+        /**
+         * 1、类名上增加@Controller注解方式。这种方式对应一个种Adapter（org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter）
+         *      handle过程是通过反射方式执行Controller对应的方法，根据请求url找到类名上加@Controller的bean中对应的方法
+         *      为什么使用反射调用方法，
+         *          1、new对象方式和spring注入方式不可行，不可能修改springMVC源码
+         *          2、转发方式不可行，因为自定义Controller不是servlet类不能转发。
+         * 2、类名上增加@Component注解并且类继承org.springframework.web.servlet.mvc.Controller类。对应一种Adapter（org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter）
+         *      继承Controller类会实现handleRequest方法，直接调用对应controller中的handleRequest方法
+         */
+        mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+        if (asyncManager.isConcurrentHandlingStarted()) {
+        return;
+        }
+
+        this.applyDefaultViewName(processedRequest, mv);
+        mappedHandler.applyPostHandle(processedRequest, response, mv);
+        } catch (Exception var20) {
+        dispatchException = var20;
+        } catch (Throwable var21) {
+        dispatchException = new NestedServletException("Handler dispatch failed", var21);
+        }
+
+        this.processDispatchResult(processedRequest, response, mappedHandler, mv, (Exception)dispatchException);
+        } catch (Exception var22) {
+        this.triggerAfterCompletion(processedRequest, response, mappedHandler, var22);
+        } catch (Throwable var23) {
+        this.triggerAfterCompletion(processedRequest, response, mappedHandler, new NestedServletException("Handler processing failed", var23));
+        }
+
+        } finally {
+        if (asyncManager.isConcurrentHandlingStarted()) {
+        if (mappedHandler != null) {
+        mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+        }
+        } else if (multipartRequestParsed) {
+        this.cleanupMultipart(processedRequest);
+        }
+
+        }
+        }
+}
