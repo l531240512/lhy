@@ -61,7 +61,7 @@
         <appender-ref ref="STDOUT" />
     </logger>
 
-    <logger name="com.lhy.lhypro.dao" level="DEBUG" additivity="false">
+    <logger name="com.lhy.pro.dao" level="DEBUG" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 

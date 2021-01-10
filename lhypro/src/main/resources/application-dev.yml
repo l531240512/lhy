@@ -56,3 +56,5 @@ mybatis:
 
 redisson:
   address: redis://127.0.0.1:6379
+
+fileFeignServiceUrl: 127.0.0.1:8081

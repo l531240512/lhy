@@ -6,11 +6,11 @@
 <!-- =======本配置文件中定义的节点可在自定义配置文件中直接使用！       ======= -->
 <!-- ============================================================== -->
 <!-- ============================================================== -->
-<mapper namespace="com.lhy.lhypro.dao.TbEmpDao">
+<mapper namespace="com.lhy.pro.dao.TbEmpDao">
 	<!-- 默认开启二级缓存,使用Least Recently Used（LRU，最近最少使用的）算法来收回 -->
 	<!-- <cache/> -->
 	<!-- 通用查询结果对象-->
-	<resultMap id="BaseResultMap" type="com.lhy.lhypro.po.TbEmp">
+	<resultMap id="BaseResultMap" type="com.lhy.pro.po.TbEmp">
             <id column="id" property="id"/>
             <result column="Name" property="name"/>
             <result column="sex" property="sex"/>
@@ -76,12 +76,12 @@
 		</foreach>
 	</select>
 	<!-- 按对象查询一页记录（多条记录） -->
-	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.lhy.lhypro.po.TbEmp">
+	<select id="selectPage" resultMap="BaseResultMap" parameterType="com.lhy.pro.po.TbEmp">
 		<include refid="Base_Select_By_Entity"/>
 	</select>
 
 	<!-- 按对象查询一页记录（多条记录） -->
-	<select id="selectAll" resultMap="BaseResultMap" parameterType="com.lhy.lhypro.po.TbEmp">
+	<select id="selectAll" resultMap="BaseResultMap" parameterType="com.lhy.pro.po.TbEmp">
 		<include refid="Base_Select_By_Entity"/>
 	</select>
 	<!-- 按主键删除一条记录 -->
@@ -97,13 +97,13 @@
 		</foreach>
 	</delete>
 	<!-- 完整插入一条记录-->
-	<insert id="insert" parameterType="com.lhy.lhypro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insert" parameterType="com.lhy.pro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_emp
 		(PASS_WORD,address,sex,email,age,Name)
 		values(passWord,address,sex,email,age,name)
 	</insert>
 	<!-- 插入一条记录(为空的字段不操作) -->
-	<insert id="insertSelective" parameterType="com.lhy.lhypro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="com.lhy.pro.po.TbEmp" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_emp
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 				<if test="passWord != null">
@@ -148,7 +148,7 @@
 		</trim>
 	</insert>
 	<!-- 更新一条记录(为空的字段不操作) -->
-	<update id="updateSelectiveByPrimaryKey" parameterType="com.lhy.lhypro.po.TbEmp">
+	<update id="updateSelectiveByPrimaryKey" parameterType="com.lhy.pro.po.TbEmp">
 		update tb_emp
 		<set>
 				<if test="passWord != null">
@@ -173,7 +173,7 @@
 		where id = #{id}
 	</update>
 	<!-- 完整更新一条记录 -->
-	<update id="updateByPrimaryKey" parameterType="com.lhy.lhypro.po.TbEmp">
+	<update id="updateByPrimaryKey" parameterType="com.lhy.pro.po.TbEmp">
 		update tb_emp
 		set PASS_WORD= #{passWord},address= #{address},sex= #{sex},email= #{email},age= #{age},Name= #{name}
 		where id = #{id}

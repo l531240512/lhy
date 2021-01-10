@@ -3,7 +3,7 @@
 <!-- ============================================================== -->
 <!-- ================可直接使用Base配置文件中定义的节点！================ -->
 <!-- ============================================================== -->
-<mapper namespace="com.lhy.lhypro.dao.TbEmpDao">
+<mapper namespace="com.lhy.pro.dao.TbEmpDao">
 	<!-- 请在下方添加自定义配置-->
 	<select id="selectByName" resultMap="BaseResultMap" parameterType="map">
 		select
