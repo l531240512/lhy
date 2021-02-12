@@ -6,6 +6,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.lhy.pro.po.TbEmp;
 import com.lhy.pro.service.TbEmpService;
 import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,11 +23,11 @@ import javax.annotation.Resource;
 @RequestMapping("/tb_emp")
 public class TbEmpController {
 
-    @Resource
+    @Autowired
     @Qualifier("TbEmpServiceImp1")
     private TbEmpService service1;
 
-    @Resource
+    @Autowired
     @Qualifier("TbEmpServiceImp")
     private TbEmpService service;
 
@@ -46,5 +47,11 @@ public class TbEmpController {
     @GetMapping("/s1/{userName}")
     public ResponseEntity<TbEmp> findEntityByUserName1(@PathVariable("userName") String userName) {
         return new ResponseEntity(service1.findEntityByName(userName), HttpStatus.OK);
+    }
+
+    @GetMapping("/callWithNoReturnType")
+    public ResponseEntity<String> callWithNoReturnType() {
+        service.asyncMethodWithNoReturnType();
+        return new ResponseEntity(null, HttpStatus.OK);
     }
 }

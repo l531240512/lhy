@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 
 public interface TbEmpService {
 
-    public ResponseEntity<TbEmp> findPage(PageBounds pageBounds);
+     ResponseEntity<TbEmp> findPage(PageBounds pageBounds);
 
-    public TbEmp findEntityByName(String userName);
+     TbEmp findEntityByName(String userName);
 
-    public TbEmp findeEntityById(Integer userId);
+     TbEmp findEntityById(Integer userId);
+
+     String asyncMethodWithNoReturnType();
 }

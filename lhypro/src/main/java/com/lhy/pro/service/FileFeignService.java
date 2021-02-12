@@ -2,7 +2,7 @@ package com.lhy.pro.service;
 
 import io.swagger.annotations.ApiImplicitParam;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -6,4 +6,5 @@ package com.lhy.pro.common;
  */
 public class UsualConstants {
     public static final String EN_CODE_UTF8 = "UTF-8";
+    public static final String SUCCESS = "success";
 }

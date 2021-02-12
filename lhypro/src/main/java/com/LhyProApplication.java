@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.Arrays;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 @Slf4j
 @EnableCaching
 @SpringBootApplication()
+@EnableAsync
 @MapperScan(basePackages = "com.lhy.pro.dao")
 public class LhyProApplication {
 
